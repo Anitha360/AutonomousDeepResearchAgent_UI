@@ -1,9 +1,11 @@
 from autogen_agentchat.agents import AssistantAgent
 from config.model_client import get_model_client
+from config.logger import get_logger
 
+logger = get_logger("writer Agent")
 
 def create_writer():
-
+    logger.info("Writer agent initialised")
     writer = AssistantAgent(
         name="writer",
         model_client=get_model_client(),
@@ -18,5 +20,5 @@ Combine all findings and produce a structured research report:
 4. Conclusion
 """
     )
-
+    logger.info("writer agent successfully completed writing")
     return writer
