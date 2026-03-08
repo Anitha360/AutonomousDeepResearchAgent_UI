@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-def scrape_page(url: str):
+def scrape_page(url: str) -> str:
 
     try:
 
@@ -12,10 +11,9 @@ def scrape_page(url: str):
 
         paragraphs = soup.find_all("p")
 
-        text = " ".join(p.get_text() for p in paragraphs)
+        text = " ".join([p.get_text() for p in paragraphs])
 
-        return text[:3000]
+        return text[:5000]
 
-    except Exception as e:
-
-        return f"Scraping error: {e}"
+    except:
+        return ""
