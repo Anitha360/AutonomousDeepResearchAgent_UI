@@ -133,19 +133,67 @@ PDF Research Paper Generator
 # Project Structure
 
 ```
-autonomous-research-agent/
+                ┌──────────────┐
+                │  Streamlit UI │
+                └──────┬───────┘
+                       │
+                       ▼
+                Research Orchestrator
+                       │
+                       ▼
+                  Planner Agent
+                       │
+                       ▼
+         Autonomous Research Pipeline
+                       │
+        ┌──────────────┼──────────────┐
+        ▼                              ▼
+   Web Search                      Web Scraper
+        │                              │
+        └──────────────┬───────────────┘
+                       ▼
+                   Vector Memory
+                       │
+                       ▼
+                Knowledge Graph
+                       │
+                       ▼
+                  Analyst Agent
+                       │
+                       ▼
+                   Critic Agent
+                       ▲
+                       │
+                  Defender Agent
+                       │
+                       ▼
+                   Writer Agent
+                       │
+                       ▼
+                 Citation Manager
+                       │
+                       ▼
+                   PDF Generator
+
+project/
+│
+├── main.py                      # CLI entry point
+│
+├── config/
+│   ├── logger.py                # logging configuration
+│   └── settings.py              # global config (API keys, model names)
 │
 ├── agents/
 │   ├── planner_agent.py
-│   ├── researcher_agent.py
 │   ├── analyst_agent.py
 │   ├── critic_agent.py
 │   ├── defender_agent.py
-│   └── writer_agent.py
+│   ├── writer_agent.py
+│   └── agent_registry.py        # (NEW) register all agents
 │
-├── memory/
-│   ├── vector_store.py
-│   └── knowledge_graph.py
+├── pipeline/
+│   ├── research_orchestrator.py
+│   └── autonomous_research_pipeline.py
 │
 ├── tools/
 │   ├── web_search.py
@@ -153,23 +201,23 @@ autonomous-research-agent/
 │   ├── source_ranker.py
 │   └── citation_manager.py
 │
-├── pipeline/
-│   └── autonomous_research_pipeline.py
+├── memory/
+│   └── vector_store.py
+│
+├── knowledge/
+│   └── knowledge_graph.py
 │
 ├── report/
-│   ├── pdf_generator.py
-│   └── research_report.pdf
+│   └── pdf_generator.py
 │
 ├── ui/
-│   └── streamlit_app.py
+│   └── app.py                   # Streamlit interface
 │
-├── config/
-│   └── model_client.py
+├── report/
+│   └── research_report.pdf
 │
-├── main.py
-├── requirements.txt
->>>>>>> c5b555e (autonomous AI agent with streamlit)
-└── README.md
+└── requirements.txt
+
 ```
 
 ---
