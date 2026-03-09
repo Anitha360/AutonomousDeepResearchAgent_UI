@@ -4,7 +4,7 @@ from autogen_agentchat.teams import RoundRobinGroupChat
 from autogen_agentchat.ui import Console
 
 from agents.planner_agent import create_planner
-from agents.research_agent import create_researcher
+from agents.researcher_agent import create_researcher
 from agents.analyst_agent import create_analyst
 from agents.critic_agent import create_critic
 from agents.writer_agent import create_writer

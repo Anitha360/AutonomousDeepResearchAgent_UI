@@ -1,12 +1,15 @@
 from autogen_agentchat.agents import AssistantAgent
 from config.model_client import get_model_client
+from config.logger import get_logger
 
-from tools.search_tool import search_web
+logger = get_logger("Research")
+
+from tools.web_search import search_web
 from tools.web_scraper import scrape_page
 
 
 def create_researcher():
-
+    logger.info("Initilize Research")
     researcher = AssistantAgent(
         name="researcher",
         model_client=get_model_client(),
@@ -21,5 +24,5 @@ Steps:
 4. Summarize findings
 """
     )
-
+    logger.info("Completed Research")
     return researcher

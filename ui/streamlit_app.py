@@ -8,6 +8,9 @@ import streamlit as st
 from pipeline.autonomous_research_pipeline import run_autonomous_research
 from report.pdf_generator import generate_pdf
 from tools.citation_manager import generate_citations
+from config.logger import get_logger
+
+logger = get_logger("Streamlit UI")
 
 st.title("Autonomous Deep Research AI Agent")
 
