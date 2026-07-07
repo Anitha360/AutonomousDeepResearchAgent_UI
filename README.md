@@ -240,8 +240,8 @@ project/
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/yourusername/deep-research-agent-autogen.git
-cd deep-research-agent-autogen
+git clone https://github.com/Anitha360/AutonomousDeepResearchAgent_UI.git
+cd AutonomousDeepResearchAgent_UI
 ```
 
 ### 2. Create Virtual Environment
@@ -367,7 +367,7 @@ Clone the repository
 
 ```
 git clone <repo-url>
-cd autonomous-research-agent
+cd AutonomousDeepResearchAgent_UI
 ```
 
 Create virtual environment
