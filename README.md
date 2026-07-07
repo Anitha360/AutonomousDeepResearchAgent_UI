@@ -577,3 +577,67 @@ It is designed as a practical example of:
 * research automation pipelines
 * multi-agent reasoning frameworks
 >>>>>>> c5b555e (autonomous AI agent with streamlit)
+
+
+Opencode Gemini
+This project implements an Autonomous Deep Research AI Agent with two primary flows: a Multi-Agent Collaborative Chat Flow (via CLI) and a Procedural Web Scraper & Report Pipeline (via Streamlit UI).
+1. Multi-Agent Collaborative Chat Flow (main.py)
+This flow uses the Microsoft AutoGen framework to orchestrate 5 specialized LLM agents in a cooperative sequence:
+[User Input: Topic]
+       │
+       ▼
+ ┌───────────┐
+ │  Planner  │ ──► Structured research plan & key questions
+ └─────┬─────┘
+       ▼
+ ┌───────────┐
+ │Researcher │ ──► Executes tools: search_web() & scrape_page()
+ └─────┬─────┘
+       ▼
+ ┌───────────┐
+ │  Analyst  │ ──► Identifies patterns, trends, and key insights
+ └─────┬─────┘
+       ▼
+ ┌───────────┐
+ │  Critic   │ ──► Evaluates research quality, gaps, & weak arguments
+ └─────┬─────┘
+       ▼
+ ┌───────────┐
+ │  Writer   │ ──► Synthesizes findings into a final structured report
+ └───────────┘
+- Execution Engine: RoundRobinGroupChat sequentially rotates through these agents for up to 12 turns.
+- LLM Client: Agents use OpenAIChatCompletionClient pointing to a local Ollama instance (qwen2.5:7b on port 11434).
+2. Procedural Research & Report Pipeline Flow (ui/streamlit_app.py)
+This flow provides an interactive web UI that bypasses the multi-agent chat and runs a programmatic research, ingestion, and publishing pipeline:
+[Streamlit UI Input] ──► run_autonomous_research(query)
+                                │
+                                ▼
+                        ┌──────────────┐
+                        │ search_web() │ ──► DuckDuckGo search returns top 5 URLs
+                        └──────┬───────┘
+                               ▼
+                        ┌──────────────┐
+                        │ scrape_page()│ ──► Requests pages & parses paragraphs (<5000 chars)
+                        └──────┬───────┘
+                               ▼
+                        ┌──────────────┐
+                        │ Vector Store │ ──► Embeds and indexes text using `SentenceTransformer`
+                        └──────┬───────┘     and local `ChromaDB`
+                               ▼
+                        ┌──────────────┐
+                        │ rank_sources │ ──► Filters and ranks the top 3 longest sources
+                        └──────┬───────┘
+                               ▼
+                        ┌──────────────┐
+                        │ generate_pdf │ ──► Combines top sources + citations and compiles
+                        └──────────────┘     a PDF using `ReportLab`
+3. Core Components Summary
+- tools/: 
+- web_search.py: Integrates ddgs (DuckDuckGo Search) to query and retrieve URLs.
+- web_scraper.py: Fetches pages via requests and parses content using BeautifulSoup.
+- source_ranker.py: Ranks collected text based on length/completeness.
+- citation_manager.py: Formats referenced URLs into numeric citations.
+- memory/:
+- vector_store.py: Local vector storage utilizing chromadb and all-MiniLM-L6-v2 embeddings.
+- knowledge_graph.py: Builds node-edge relationships using networkx for structured semantic querying.
+- report/pdf_generator.py: Compiles the title, content, and bibliography into a formatted PDF using ReportLab's flowable story structure.
